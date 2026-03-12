@@ -1,0 +1,67 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Flask
+instance/
+.webassets-cache
+
+# Environment
+.env
+.venv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Project specific
+data/
+ml_models/
+static/uploads/
+*.csv
+Attendance.csv
+classifier.xml
+*.log
+*.txt
+!requirements.txt
+!README.md
+!PHPMYADMIN_SETUP.md
+!QUICK_START.md
+!TROUBLESHOOTING.md
+
+# Build and Temp
+AI-Attendance-main/
+debug_*.py
+fix_dates.py
+utils/
+__pycache__/
+.DS_Store
+Thumbs.db

@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+
+{% block title %}Face Recognition - Attendance System{% endblock %}
+
+{% block content %}
+<header class="mb-3" style="margin-top: var(--spacing-sm);">
+    <h1 style="font-weight: 800; font-size: 3rem; letter-spacing: -2px;">Face Recognition</h1>
+    <p style="color: var(--text-dim); font-size: 1.1rem;">Mark attendance using face recognition or capture samples for
+        training.</p>
+</header>
+
+<div style="display: grid; grid-template-columns: 2fr 1fr; gap: var(--spacing-md); align-items: start;">
+    <div class="glass glass-card">
+        <h2 style="font-weight: 700; font-size: 1.6rem; margin-bottom: 1.5rem;">Camera Feed</h2>
+        <div class="camera-box">
+            <video id="video" autoplay playsinline
+                style="width: 100%; height: 100%; object-fit: cover; border-radius: 1.2rem;"></video>
+            <canvas id="canvas" style="display: none;"></canvas>
+            <div id="scannerLine"
+                style="position: absolute; top:0; left:0; width:100%; height:3px; background: var(--primary); opacity: 0; box-shadow: 0 0 20px var(--primary); transition: opacity 0.3s; z-index: 10;">
+            </div>
+        </div>
+
+        <div style="margin-top: 2rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+            <button id="startCamera" class="btn btn-primary">
+                <span>📷</span> Start Camera
+            </button>
+            <button id="stopCamera" class="btn btn-outline" style="display: none;">
+                Stop Camera
+            </button>
+            <button id="recognizeFace" class="btn btn-primary" style="display: none;">
+                <span>🔍</span> Recognize Face
+            </button>
+            <!-- USER SPECIFIC: Capture face option restored to clear labeling -->
+            <button id="capturePhoto" class="btn btn-outline" style="display: none;">
+                <span>📸</span> Capture for Training
+            </button>
+        </div>
+
+        <div id="recognitionResult" style="margin-top: 2rem; display: none;" class="glass">
+            <div style="padding: 1.5rem;">
+                <h3 style="margin-top:0; font-size: 1.1rem; color: var(--secondary); text-transform: uppercase;">Success
+                </h3>
+                <div id="resultContent" style="margin-top: 0.5rem; font-size: 1.3rem; font-weight: 700;"></div>
+            </div>
+        </div>
+    </div>
+
+    <aside>
+        <div class="glass glass-card mb-2">
+            <h3 style="font-weight: 700; font-size: 1.3rem; margin-bottom: 1rem;">Training Control</h3>
+            <div class="form-group mb-2">
+                <label class="stat-label">Select Student</label>
+                <select id="studentSelect" class="form-control" style="margin-top: 0.5rem;">
+                    <option value="">Select Student...</option>
+                </select>
+            </div>
+
+            <div id="captureProgress" style="margin-top: 1.5rem; display: none;">
+                <div class="flex-between mb-1">
+                    <span class="stat-label">Samples Captured</span>
+                    <span id="captureCount" style="font-weight: 700;">0</span>/100
+                </div>
+                <div style="background: rgba(0,0,0,0.05); height: 10px; border-radius: 5px; overflow: hidden;">
+                    <div id="progressBar"
+                        style="background: var(--primary); height: 100%; width: 0%; transition: width 0.3s;"></div>
+                </div>
+            </div>
+
+            <hr style="border: 0; border-top: 1px solid var(--glass-border); margin: 1.5rem 0;">
+
+            <button id="trainModel" class="btn btn-outline" style="width: 100%; justify-content: center;">
+                🎓 Train Classifier
+            </button>
+            <div id="trainingStatus"
+                style="margin-top: 1rem; font-size: 0.9rem; text-align: center; color: var(--text-dim);"></div>
+        </div>
+
+        <div class="glass glass-card">
+            <h3 style="font-weight: 700; font-size: 1rem; margin-bottom: 0.5rem;">Instructions</h3>
+            <ul style="color: var(--text-dim); padding-left: 1.2rem; line-height: 1.8; font-size: 0.9rem;">
+                <li>Select a student and click <strong>Capture</strong> to take 100 photos.</li>
+                <li>Ensure faces are clear and well-lit.</li>
+                <li>After capturing, click <strong>Train</strong>.</li>
+                <li>Use <strong>Recognize</strong> for attendance.</li>
+            </ul>
+        </div>
+    </aside>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/camera.js') }}?v={{ range(10000, 99999) | random }}"></script>
+<script>
+    const recognizeBtn = document.getElementById('recognizeFace');
+    const scanner = document.getElementById('scannerLine');
+
+    recognizeBtn.addEventListener('click', () => {
+        scanner.style.opacity = '1';
+        let pos = 0;
+        const interval = setInterval(() => {
+            pos += 2;
+            scanner.style.top = pos + '%';
+            if (pos >= 100) {
+                clearInterval(interval);
+                scanner.style.opacity = '0';
+            }
+        }, 15);
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}500 - Server Error{% endblock %}
+{% block content %}
+<div class="card" style="text-align: center; padding: 3rem;">
+    <h1 style="font-size: 4rem; color: var(--danger);">500</h1>
+    <p>Something went wrong on our end. Please try again later.</p>
+    <a href="{{ url_for('dashboard') }}" class="btn btn-primary" style="margin-top: 1rem;">Back to Dashboard</a>
+</div>
+{% endblock %}

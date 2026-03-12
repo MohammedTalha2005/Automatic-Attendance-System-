@@ -1,0 +1,158 @@
+{% extends "base.html" %}
+
+{% block title %}{% if student %}Edit{% else %}Add{% endif %} Student - Attendance System{% endblock %}
+
+{% block content %}
+<div style="max-width: 900px; margin: 0 auto;">
+    <div class="card">
+        <h1 class="card-header">{% if student %}Edit{% else %}Add New{% endif %} Student</h1>
+
+        <form method="POST">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div class="form-group">
+                    <label for="student_id" class="form-label">Student ID *</label>
+                    <input type="text" id="student_id" name="student_id" class="form-control"
+                        value="{{ student.student_id if student else '' }}" {% if student %}readonly{% endif %}
+                        required>
+                </div>
+
+                <div class="form-group">
+                    <label for="name" class="form-label">Full Name *</label>
+                    <input type="text" id="name" name="name" class="form-control"
+                        value="{{ student.name if student else '' }}" required>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div class="form-group">
+                    <label for="roll_no" class="form-label">Roll Number *</label>
+                    <input type="text" id="roll_no" name="roll_no" class="form-control"
+                        value="{{ student.roll_no if student else '' }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="department" class="form-label">Department *</label>
+                    <select id="department" name="department" class="form-control" required>
+                        <option value="">Select Department</option>
+                        <option value="CSE" {% if student and student.department=='CSE' %}selected{% endif %}>CSE
+                        </option>
+                        <option value="AIML" {% if student and student.department=='AIML' %}selected{% endif %}>AIML
+                        </option>
+                        <option value="MECH" {% if student and student.department=='MECH' %}selected{% endif %}>MECH
+                        </option>
+                        <option value="CIVIL" {% if student and student.department=='CIVIL' %}selected{% endif %}>CIVIL
+                        </option>
+                        <option value="ECE" {% if student and student.department=='ECE' %}selected{% endif %}>ECE
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;">
+                <div class="form-group">
+                    <label for="course" class="form-label">Course</label>
+                    <select id="course" name="course" class="form-control">
+                        <option value="">Select Course</option>
+                        <option value="FE" {% if student and student.course=='FE' %}selected{% endif %}>FE</option>
+                        <option value="SE" {% if student and student.course=='SE' %}selected{% endif %}>SE</option>
+                        <option value="TE" {% if student and student.course=='TE' %}selected{% endif %}>TE</option>
+                        <option value="BE" {% if student and student.course=='BE' %}selected{% endif %}>BE</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="year" class="form-label">Year</label>
+                    <select id="year" name="year" class="form-control">
+                        <option value="">Select Year</option>
+                        <option value="2024-25" {% if student and student.year=='2024-25' %}selected{% endif %}>2024-25
+                        </option>
+                        <option value="2025-26" {% if student and student.year=='2025-26' %}selected{% endif %}>2025-26
+                        </option>
+                        <option value="2026-27" {% if student and student.year=='2026-27' %}selected{% endif %}>2026-27
+                        </option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="semester" class="form-label">Semester</label>
+                    <select id="semester" name="semester" class="form-control">
+                        <option value="">Select Semester</option>
+                        {% for i in range(1, 9) %}
+                        <option value="{{ i }}" {% if student and student.semester==i|string %}selected{% endif %}>{{ i
+                            }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;">
+                <div class="form-group">
+                    <label for="division" class="form-label">Division</label>
+                    <select id="division" name="division" class="form-control">
+                        <option value="">Select Division</option>
+                        <option value="A" {% if student and student.division=='A' %}selected{% endif %}>A</option>
+                        <option value="B" {% if student and student.division=='B' %}selected{% endif %}>B</option>
+                        <option value="C" {% if student and student.division=='C' %}selected{% endif %}>C</option>
+                        <option value="D" {% if student and student.division=='D' %}selected{% endif %}>D</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="gender" class="form-label">Gender</label>
+                    <select id="gender" name="gender" class="form-control">
+                        <option value="">Select Gender</option>
+                        <option value="Male" {% if student and student.gender=='Male' %}selected{% endif %}>Male
+                        </option>
+                        <option value="Female" {% if student and student.gender=='Female' %}selected{% endif %}>Female
+                        </option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="dob" class="form-label">Date of Birth</label>
+                    <input type="date" id="dob" name="dob" class="form-control"
+                        value="{{ student.dob if student else '' }}">
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div class="form-group">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" id="email" name="email" class="form-control"
+                        value="{{ student.email if student else '' }}">
+                </div>
+
+                <div class="form-group">
+                    <label for="phone" class="form-label">Phone Number</label>
+                    <input type="tel" id="phone" name="phone" class="form-control"
+                        value="{{ student.phone if student else '' }}">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="address" class="form-label">Address</label>
+                <textarea id="address" name="address" class="form-control"
+                    rows="2">{{ student.address if student else '' }}</textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="teacher_name" class="form-label">Teacher Name</label>
+                <input type="text" id="teacher_name" name="teacher_name" class="form-control"
+                    value="{{ student.teacher_name if student else '' }}">
+            </div>
+
+            <div class="flex gap-2" style="margin-top: 1.5rem;">
+                <button type="submit" class="btn btn-primary">
+                    {% if student %}Update{% else %}Save{% endif %} Student
+                </button>
+                <a href="{{ url_for('students.index') }}" class="btn btn-outline">Cancel</a>
+                {% if student %}
+                <a href="{{ url_for('face.index') }}?student_id={{ student.id }}" class="btn btn-secondary">
+                    📸 Capture Photos
+                </a>
+                {% endif %}
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

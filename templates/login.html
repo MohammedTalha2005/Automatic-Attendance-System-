@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}Login - Attendance System{% endblock %}
+
+{% block content %}
+<div style="max-width: 550px; margin: 8rem auto; position: relative; z-index: 10;">
+    <div class="glass glass-card" style="padding: 4rem;">
+        <div style="text-align:center; margin-bottom: 3.5rem;">
+            <div style="margin-bottom: 2rem; display: flex; justify-content: center;">
+                <svg width="80" height="80" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                    style="filter: drop-shadow(0 10px 15px hsla(var(--accent-primary), 0.2));">
+                    <circle cx="12" cy="12" r="10" stroke="var(--primary)" stroke-width="1" stroke-dasharray="2 2"
+                        opacity="0.4" />
+                    <path
+                        d="M7 12C7 9.23858 9.23858 7 12 7C14.7614 7 17 9.23858 17 12V13C17 14.1046 16.1046 15 15 15C13.8954 15 13 14.1046 13 13V12"
+                        stroke="var(--text-main)" stroke-width="1.5" stroke-linecap="round" />
+                    <path d="M9 15C9 16.6569 10.3431 18 12 18C13.6569 18 15 16.6569 15 15" stroke="var(--text-main)"
+                        stroke-width="1.5" stroke-linecap="round" opacity="0.6" />
+                    <path d="M12 7V4M12 20V17M17 12H20M4 12H7" stroke="var(--primary)" stroke-width="1.5"
+                        stroke-linecap="round" />
+                    <rect x="11" y="11" width="2" height="2" rx="1" fill="var(--primary)" />
+                    <path d="M8 12L11 15L16 9" stroke="var(--primary)" stroke-width="1.5" stroke-linecap="round"
+                        stroke-linejoin="round" opacity="0.8" />
+                </svg>
+            </div>
+            <h1
+                style="font-weight: 800; font-size: 3rem; margin-bottom: 0.75rem; letter-spacing: -2px; color: var(--text-main);">
+                Login</h1>
+            <p style="color: var(--text-dim); font-size: 1.1rem; font-weight: 400;">Secure portal for system
+                administration.</p>
+        </div>
+
+        <form method="POST" action="{{ url_for('auth.login') }}">
+            <div class="form-group mb-2">
+                <label for="username" class="stat-label">Identity Username</label>
+                <input type="text" id="username" name="username" class="form-control" style="margin-top: 1rem;"
+                    placeholder="e.g. admin" required autofocus>
+            </div>
+
+            <div class="form-group mb-3">
+                <label for="password" class="stat-label">Security Passphrase</label>
+                <input type="password" id="password" name="password" class="form-control" style="margin-top: 1rem;"
+                    placeholder="••••••••" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary"
+                style="width: 100%; margin-top: 1.5rem; justify-content: center; padding: 1.5rem; font-size: 1.1rem;">
+                Grant Access
+            </button>
+        </form>
+
+        <div
+            style="margin-top: 3.5rem; text-align: center; border-top: 2px solid var(--glass-border); padding-top: 2.5rem; display: flex; flex-direction: column; gap: 1rem;">
+            <p style="color: var(--text-dim); font-size: 1rem;">
+                New administrator?
+                <a href="{{ url_for('auth.register') }}"
+                    style="color: var(--primary); text-decoration: underline; font-weight: 700; text-underline-offset: 4px;">Request
+                    Credentials</a>
+            </p>
+            <a href="{{ url_for('auth.forgot_password') }}"
+                style="color: var(--text-dim); text-decoration: none; font-size: 0.85rem; opacity: 0.6; font-weight: 500;">Recover
+                Security Phrase</a>
+        </div>
+
+        <div
+            style="margin-top: 3rem; padding: 2rem; background: rgba(0,0,0,0.02); border-radius: 1.5rem; border: 1px dashed var(--glass-border);">
+            <p style="color: var(--text-dim); font-size: 0.9rem; text-align: center; line-height: 1.6;">
+                <span
+                    style="opacity: 0.5; font-weight: 700; text-transform: uppercase; font-size: 0.7rem; letter-spacing: 1px;">System
+                    Default</span><br>
+                <code
+                    style="background: hsla(var(--accent-primary), 0.1); padding: 0.3rem 0.75rem; border-radius: 8px; color: var(--primary); font-weight: 700; font-family: monospace; display: inline-block; margin-top: 0.5rem;">admin / admin</code>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}
